@@ -21,9 +21,9 @@ public class ImageStats {
 
     public void map(Object key, Text value, Context context
                     ) throws IOException, InterruptedException {
-      StringTokenizer line = new StringTokenizer('\n');
+      StringTokenizer line = new StringTokenizer("\n");
       while (line.hasMoreTokens()) {
-        String[] words = line.nextToken.split(" \t", 6);
+        String[] words = line.nextToken().split(" \t", 6);
         int sum = Integer.valueOf(words[2]) +
                   Integer.valueOf(words[3]) +
                   Integer.valueOf(words[4]);
@@ -52,15 +52,18 @@ public class ImageStats {
 
   public static void main(String[] args) throws Exception {
     Configuration conf = new Configuration();
-    Job job = Job.getInstance(conf, "word count");
-    job.setJarByClass(WordCount.class);
+    Job job = Job.getInstance(conf, "Image Stats");
+    job.setJarByClass(ImageStats.class);
     job.setMapperClass(TokenizerMapper.class);
     job.setCombinerClass(IntSumReducer.class);
     job.setReducerClass(IntSumReducer.class);
     job.setOutputKeyClass(Text.class);
     job.setOutputValueClass(IntWritable.class);
-    FileInputFormat.addInputPath(job, new Path(args[0]));
-    FileOutputFormat.setOutputPath(job, new Path(args[1]));
+    //FileInputFormat.addInputPath(job, new Path(args[0]));
+    //FileOutputFormat.setOutputPath(job, new Path(args[1]));
+
+    FileInputFormat.addInputPath(job, new Path("./input"));
+    FileOutputFormat.setOutputPath(job, new Path("./output"));
     System.exit(job.waitForCompletion(true) ? 0 : 1);
   }
 }

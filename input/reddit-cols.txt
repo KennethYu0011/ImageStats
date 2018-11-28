@@ -1,1 +1,0 @@
-unixtime	#image_id	number_of_upvotes	number_of_downvotes	number_of_comments	title		
